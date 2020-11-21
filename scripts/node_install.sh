@@ -13,12 +13,9 @@ chmod +x consul
 mv consul /usr/local/bin/consul
 
 # launch the consul agent, in background
+current_ip=$(/sbin/ip -o -4 addr list enp0s8 | awk '{print $4}' | cut -d/ -f1)
 consul agent \
   -node=$(hostname) \
-  -bind=10.0.0.21 \
-  -enable-script-checks=true \
-  -data-dir=/tmp/consul \
-  -config-dir=/etc/consul.d > /dev/null 2>&1 &
-
-# join the master
-# consul join 10.0.0.11
+  -bind=${current_ip} \
+  -config-dir=/etc/consul.d \
+  -config-file=/etc/consul/config.json > /dev/null 2>&1 &

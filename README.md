@@ -13,9 +13,6 @@ to launch and destroy the cluster quickly
 ```
 vagrant up --no-tty
 vagrant destroy -f
-
-# Or if you want to play
-vagrant reload
 ```
 
 to access the web ui of Consul  
