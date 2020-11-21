@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
       consulmasters.vm.box = IMAGE
       consulmasters.vm.hostname = "consulmaster#{i}"
       consulmasters.vm.network  :private_network, ip: "10.0.0.#{i+10}"
-      consulmasters.vm.provision "file", source: "./.ssh/id_rsa.pub", destination: "/tmp/id_rsa.pub"
+      consulmasters.vm.provision "file", source: "./configs/master-consul.json", destination: "/tmp/master-consul.json"
       consulmasters.vm.provision "shell", privileged: true,  path: "scripts/master_install.sh"
     end
   end
@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
       consulnodes.vm.box = IMAGE
       consulnodes.vm.hostname = "consulnode#{i}"
       consulnodes.vm.network  :private_network, ip: "10.0.0.#{i+20}"
-      consulnodes.vm.provision "file", source: "./.ssh/id_rsa.pub", destination: "/tmp/id_rsa.pub"
+      consulnodes.vm.provision "file", source: "./configs/node-consul.json", destination: "/tmp/node-consul.json"
       consulnodes.vm.provision "shell", privileged: true,  path: "scripts/node_install.sh"
     end
   end
