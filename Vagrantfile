@@ -9,6 +9,8 @@ Vagrant.configure("2") do |config|
       consulmasters.vm.box = IMAGE
       consulmasters.vm.hostname = "consulmaster#{i}"
       consulmasters.vm.network  :private_network, ip: "10.0.0.#{i+10}"
+      consulmasters.vm.provision "file", source: "./configs/agent-policy.hcl", destination: "/tmp/agent-policy.hcl"
+      consulmasters.vm.provision "file", source: "./configs/dns-request-policy.hcl", destination: "/tmp/dns-request-policy.hcl"
       consulmasters.vm.provision "file", source: "./configs/master-consul.json", destination: "/tmp/master-consul.json"
       consulmasters.vm.provision "shell", privileged: true,  path: "scripts/master_install.sh"
     end

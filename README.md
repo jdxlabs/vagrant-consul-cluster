@@ -9,9 +9,9 @@ These scripts allow the deployment of a Consul cluster running in Vagrant.
 ## Basics
 Here are the basic commands,  
 
-to launch and destroy the cluster quickly  
+to launch and destroy the cluster  
 ```
-vagrant up --no-tty
+vagrant up
 vagrant destroy -f
 ```
 
