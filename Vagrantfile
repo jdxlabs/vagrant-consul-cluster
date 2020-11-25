@@ -1,5 +1,5 @@
-MASTER_COUNT = 1
-NODE_COUNT = 1
+MASTER_COUNT = 3
+NODE_COUNT = 3
 IMAGE = "ubuntu/bionic64"
 
 Vagrant.configure("2") do |config|
@@ -12,6 +12,7 @@ Vagrant.configure("2") do |config|
       consulmasters.vm.provision "file", source: "./configs/agent-policy.hcl", destination: "/tmp/agent-policy.hcl"
       consulmasters.vm.provision "file", source: "./configs/dns-request-policy.hcl", destination: "/tmp/dns-request-policy.hcl"
       consulmasters.vm.provision "file", source: "./configs/master-consul.json", destination: "/tmp/master-consul.json"
+      consulmasters.vm.provision "file", source: "./scripts/master_acl.sh", destination: "/tmp/master_acl.sh"
       consulmasters.vm.provision "shell", privileged: true,  path: "scripts/master_install.sh"
     end
   end
@@ -22,6 +23,7 @@ Vagrant.configure("2") do |config|
       consulnodes.vm.hostname = "consulnode#{i}"
       consulnodes.vm.network  :private_network, ip: "10.0.0.#{i+20}"
       consulnodes.vm.provision "file", source: "./configs/node-consul.json", destination: "/tmp/node-consul.json"
+      consulnodes.vm.provision "file", source: "./scripts/node_acl.sh", destination: "/tmp/node_acl.sh"
       consulnodes.vm.provision "shell", privileged: true,  path: "scripts/node_install.sh"
     end
   end

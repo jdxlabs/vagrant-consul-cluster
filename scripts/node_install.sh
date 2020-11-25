@@ -4,8 +4,8 @@ set -e
 
 # setup configs
 apt install -y unzip
-mkdir /etc/consul
-mkdir /etc/consul.d
+mkdir -p /etc/consul
+mkdir -p /etc/consul.d
 mv /tmp/node-consul.json  /etc/consul/config.json
 
 # setup the consul binary
