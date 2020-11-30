@@ -23,4 +23,5 @@ vagrant ssh consulmaster1 -- -L 8500:localhost:8500
 ```
 
 ## More informations
-You can visit the associated blog post here : https://blog.wescale.fr/2020/11/30/kubernetes-sur-aws-eks-ecs-ou-nomad/.
+You can visit the associated blog post here :  
+https://blog.wescale.fr/2020/11/30/kubernetes-sur-aws-eks-ecs-ou-nomad/.
