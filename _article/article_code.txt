@@ -1,0 +1,47 @@
+# article_code.txt
+
+vagrant up
+
+---
+
+vagrant ssh consulmaster1 -- -L 8500:localhost:8500
+
+---
+
+# Set some KVs
+consul kv put var1 value1
+consul kv put var2 value2
+consul kv put var3 value3
+
+# Set ACLs config
+#
+# Allow anonymous access for DNS
+# https://www.consul.io/docs/commands/acl/token/update
+##
+consul acl policy create -name "dns-requests" -rules @/tmp/dns-request-policy.hcl
+consul acl token update -id "00000000-0000-0000-0000-000000000002" -policy-name dns-requests
+# Create agent token
+# https://www.consul.io/docs/commands/acl/token/create
+# https://www.consul.io/docs/commands/acl/set-agent-token
+##
+consul acl policy create -name "agent" -rules @/tmp/agent-policy.hcl
+RES=$(consul acl token create -description "Agent Token" -policy-name agent)
+AGENT_TOKEN=$(echo $RES  | cut -d" " -f4)
+consul acl set-agent-token agent $AGENT_TOKEN
+
+---
+
+consul acl set-agent-token agent $AGENT_TOKEN
+
+---
+
+vagrant destroy -f
+
+
+
+Links
+https://developer.hashicorp.com/consul/tutorials/security/access-control-setup-production
+https://www.vagrantup.com/
+https://www.virtualbox.org/
+https://tferdinand.net/creer-un-cluster-kubernetes-local-avec-vagrant/
+

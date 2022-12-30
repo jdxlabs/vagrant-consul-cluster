@@ -1,8 +1,13 @@
-MASTER_COUNT = 3
-NODE_COUNT = 3
+MASTER_COUNT = 1
+NODE_COUNT = 1
 IMAGE = "ubuntu/bionic64"
 
 Vagrant.configure("2") do |config|
+
+  # disconnect virtuabox serial port
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
+  end
 
   (1..MASTER_COUNT).each do |i|
     config.vm.define "consulmaster#{i}" do |consulmasters|
